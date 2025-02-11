@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.ejs": "html",
+        "proc.h": "c",
+        "x86.h": "c",
+        "memlayout.h": "c",
+        "param.h": "c",
+        "types.h": "c"
+    }
+}

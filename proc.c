@@ -203,6 +203,9 @@ fork(void)
   // Clear %eax so that fork returns 0 in the child.
   np->tf->eax = 0;
 
+  // Initialize priority of newly created process.
+  np->prio = 1;
+
   for(i = 0; i < NOFILE; i++)
     if(curproc->ofile[i])
       np->ofile[i] = filedup(curproc->ofile[i]);
@@ -531,4 +534,15 @@ procdump(void)
     }
     cprintf("\n");
   }
+}
+
+// Newly added syscalls.
+void setprio(int prio) {
+    struct proc* curr_proc_ptr = myproc();
+    curr_proc_ptr->prio = prio;
+}
+
+int getprio(void) {
+    struct proc* curr_proc_ptr = myproc();
+    return curr_proc_ptr->prio;
 }

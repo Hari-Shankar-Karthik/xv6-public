@@ -89,3 +89,17 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// Newly added syscalls.
+int sys_setprio(void) {
+    int prio;
+    if(argint(0, &prio) < 0) {
+        return -1;
+    } 
+    setprio(prio);
+    return 0;
+}
+
+int sys_getprio(void) {
+    return getprio();
+}
