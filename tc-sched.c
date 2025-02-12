@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
       if (ret == 0)
         {
 	  setprio(priority);
+      printf(1, "Priority of child process (PID %d) = %d\n", getpid(), getprio());
 	  delay(20);
 	  exit();
         }
