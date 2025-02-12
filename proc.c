@@ -335,13 +335,27 @@ scheduler(void)
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
+    int max_prio = 0;
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
+        continue;
+      
+      if(max_prio < p->prio) {
+        max_prio = p->prio;
+      }
+    }
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      if(p->state != RUNNABLE || p->prio < max_prio)
         continue;
 
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
+      // Decay the priority of the chosen process
+      // p->prio = (1 + p->prio) / 2;
+      if(p->prio > 1) {
+        p->prio--;
+      } 
       c->proc = p;
       switchuvm(p);
       p->state = RUNNING;
